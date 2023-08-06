@@ -3,7 +3,7 @@ import FormRow from "../../ui/form-row";
 import Input from "../../ui/input";
 import Spinner from "../../ui/spinner";
 import { useSettings } from "./use-settings";
-import { useUpdateSetting } from "./use-update-setting";
+import { useUpdateSettings } from "./use-update-settings";
 
 function UpdateSettingsForm() {
   const {
@@ -16,14 +16,14 @@ function UpdateSettingsForm() {
     } = {},
   } = useSettings();
 
-  const { isUpdating, updateSetting } = useUpdateSetting();
+  const { isUpdating, updateSettings } = useUpdateSettings();
 
   if (isLoading) return <Spinner />;
 
   function handleUpdate(e, field) {
     const { value } = e.target;
     if (!value) return;
-    updateSetting({ [field]: value });
+    updateSettings({ [field]: value });
   }
 
   return (
