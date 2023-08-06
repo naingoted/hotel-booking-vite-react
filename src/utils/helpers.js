@@ -1,4 +1,4 @@
-export const formatCurreny = (value) => {
+export const formatCurrency = (value) => {
   return new Intl.NumberFormat("en", {
     style: "currency",
     currency: "USD",
