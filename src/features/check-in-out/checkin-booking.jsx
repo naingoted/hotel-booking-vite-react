@@ -13,7 +13,7 @@ import { useEffect } from "react";
 import { formatCurrency } from "../../utils/helpers";
 import ButtonGroup from "../../ui/button-group";
 import Button from "../../ui/button";
-import Spinner from "../../ui/Spinner";
+import Spinner from "../../ui/spinner";
 import Empty from "../../ui/empty";
 
 const Box = styled.div`

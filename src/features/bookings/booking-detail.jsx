@@ -3,7 +3,7 @@ import BookingDataBox from "./booking-data-box";
 import Row from "../../ui/row";
 import Heading from "../../ui/heading";
 import ButtonGroup from "../../ui/button-group";
-import Spinner from "../../ui/Spinner";
+import Spinner from "../../ui/spinner";
 import { useMoveBack } from "../../hooks/use-move-back";
 import { useNavigate } from "react-router-dom";
 import Tag from "../../ui/tag";
