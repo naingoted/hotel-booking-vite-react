@@ -14,6 +14,7 @@ import { formatCurrency } from "../../utils/helpers";
 import ButtonGroup from "../../ui/button-group";
 import Button from "../../ui/button";
 import Spinner from "../../ui/Spinner";
+import Empty from "../../ui/empty";
 
 const Box = styled.div`
   background-color: var(--color-grey-0);
@@ -34,6 +35,7 @@ function CheckinBooking() {
   const { checkin, isCheckingIn } = useCheckin();
 
   if (isLoading || isLoadingSettings) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
 
   const {
     id: bookingId,
@@ -45,7 +47,7 @@ function CheckinBooking() {
   } = booking;
 
   const optionalBreakfastPrice =
-    settings.breakfastPrice * num_nights * num_guests;
+    settings.breakfast_price * num_nights * num_guests;
 
   function handleCheckin() {
     if (!confirmPaid) return;

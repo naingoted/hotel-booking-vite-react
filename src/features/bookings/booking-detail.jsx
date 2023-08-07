@@ -15,6 +15,7 @@ import ConfirmDelete from "../../ui/confirm-delete";
 import { useBooking } from "./use-booking";
 import useCheckout from "../check-in-out/use-checkout";
 import { useDeleteBooking } from "./use-delete-booking";
+import Empty from "../../ui/empty";
 
 const HeadingGroup = styled.div`
   display: flex;
@@ -36,6 +37,7 @@ function BookingDetail() {
   const navigate = useNavigate();
 
   if (isLoading) return <Spinner />;
+  if (!booking) return <Empty resourceName="booking" />;
 
   const { status, id: bookingId } = booking;
 

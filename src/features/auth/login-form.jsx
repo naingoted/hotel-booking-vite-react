@@ -1,38 +1,58 @@
 import { useState } from "react";
-import Buttom from "../../ui/button";
-import FormRow from "../../ui/form-row";
-import Form from "../../form";
+import Button from "../../ui/button";
+import Form from "../../ui/form";
 import Input from "../../ui/input";
+import FormRowVertical from "../../ui/form-row-vertical";
+import { useLogin } from "./use-login";
+import SpinnerMini from "../../ui/spinner-mini";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  function handleSubmit() {}
+  const { login, isLoading } = useLogin();
+
+  function handleSubmit(e) {
+    e.preventDefault();
+    if (!email || !password) return;
+    login(
+      { email, password },
+      {
+        onSettled: () => {
+          setEmail("");
+          setPassword("");
+        },
+      }
+    );
+  }
 
   return (
     <Form onSubmit={handleSubmit}>
-      <FormRow label="Email address" orientation="vertical">
+      <FormRowVertical label="Email address">
         <Input
           type="email"
           id="email"
-          // This makes this form better for password managers
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          disabled={isLoading}
         />
-      </FormRow>
-      <FormRow label="Password" orientation="vertical">
+      </FormRowVertical>
+
+      <FormRowVertical label="Password">
         <Input
           type="password"
           id="password"
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          disabled={isLoading}
         />
-      </FormRow>
-      <FormRow orientation="vertical">
-        <Button size="large">Login</Button>
-      </FormRow>
+      </FormRowVertical>
+      <FormRowVertical>
+        <Button size="large" disabled={isLoading}>
+          {!isLoading ? "Log in" : <SpinnerMini />}
+        </Button>
+      </FormRowVertical>
     </Form>
   );
 }
