@@ -1,4 +1,5 @@
 import { useForm } from "react-hook-form";
+import styled from "styled-components";
 import Input from "../../ui/input";
 import Form from "../../ui/form";
 import Button from "../../ui/button";
@@ -8,6 +9,22 @@ import FormRow from "../../ui/form-row";
 
 import { useCreateCabin } from "./use-create-cabin";
 import { useEditCabin } from "./use-edit-cabin";
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
+const ImagePreview = styled.img`
+  display: block;
+  width: 12rem;
+  margin-right: 2rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+
+  outline: 2px solid var(--color-grey-100);
+`;
 
 interface CreateCabinFormProps {
   cabinToEdit?: {
@@ -22,7 +39,18 @@ interface CreateCabinFormProps {
   onCloseModal?: () => void;
 }
 
-function CreateCabinForm({ cabinToEdit, onCloseModal }: CreateCabinFormProps) {
+function CreateCabinForm({
+  cabinToEdit = {
+    id: "",
+    name: "",
+    max_capacity: 0,
+    regular_price: 0,
+    discount: 0,
+    description: "",
+    image: "",
+  },
+  onCloseModal,
+}: CreateCabinFormProps) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
@@ -141,13 +169,18 @@ function CreateCabinForm({ cabinToEdit, onCloseModal }: CreateCabinFormProps) {
       </FormRow>
 
       <FormRow label="Cabin photo">
-        <FileInput
-          id="image"
-          accept="image/*"
-          {...register("image", {
-            required: isEditSession ? false : "This field is required",
-          })}
-        />
+        <Wrapper>
+          {isEditSession && editValues?.image && (
+            <ImagePreview src={editValues.image} />
+          )}
+          <FileInput
+            id="image"
+            accept="image/*"
+            {...register("image", {
+              required: isEditSession ? false : "This field is required",
+            })}
+          />
+        </Wrapper>
       </FormRow>
 
       <FormRow>

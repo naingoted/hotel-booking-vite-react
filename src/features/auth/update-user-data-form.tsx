@@ -1,4 +1,5 @@
 import { FormEvent, useState } from "react";
+import styled from "styled-components";
 
 import Button from "../../ui/button";
 import FileInput from "../../ui/file-input";
@@ -8,12 +9,28 @@ import Input from "../../ui/input";
 import { useUser } from "./use-user";
 import { useUpdateUser } from "./use-update-user";
 
+const Avatar = styled.img`
+  display: block;
+  width: 12rem;
+  margin-right: 2rem;
+  aspect-ratio: 1;
+  object-fit: cover;
+  object-position: center;
+
+  outline: 2px solid var(--color-grey-100);
+`;
+
+const Wrapper = styled.div`
+  display: flex;
+  align-items: center;
+`;
+
 function UpdateUserDataForm() {
   const { user } = useUser();
 
   const {
     email,
-    user_metadata: { full_name: currentFullName },
+    user_metadata: { full_name: currentFullName, avatar: avatarImage },
   } = user;
 
   const { updateUser, isUpdating } = useUpdateUser();
@@ -56,12 +73,17 @@ function UpdateUserDataForm() {
       </FormRow>
 
       <FormRow label="Avatar image">
-        <FileInput
-          id="avatar"
-          accept="image/*"
-          onChange={(e) => setAvatar(e.target.files[0])}
-          disabled={isUpdating}
-        />
+        <Wrapper>
+          {avatarImage && (
+            <Avatar src={avatarImage} alt={`Avatar of ${currentFullName}`} />
+          )}
+          <FileInput
+            id="avatar"
+            accept="image/*"
+            onChange={(e) => setAvatar(e.target.files[0])}
+            disabled={isUpdating}
+          />
+        </Wrapper>
       </FormRow>
 
       <FormRow>
