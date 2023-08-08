@@ -5,9 +5,12 @@ import Input from "../../ui/input";
 import Button from "../../ui/button";
 import { SignUpData } from "../../services/api-auth";
 import FormRowVertical from "../../ui/form-row-vertical";
+import { useNavigate } from "react-router-dom";
+import FormRow from "../../ui/form-row";
 
 function SignupForm() {
   const { signup, isLoading } = useSignup();
+  const navigate = useNavigate();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
@@ -15,7 +18,10 @@ function SignupForm() {
     signup(
       { full_name, email, password },
       {
-        onSettled: () => reset(),
+        onSettled: () => {
+          reset();
+          navigate("/");
+        },
       }
     );
   }
@@ -82,19 +88,14 @@ function SignupForm() {
           })}
         />
       </FormRowVertical>
-      <FormRowVertical>
+      <FormRow>
         <>
-          <Button
-            variation="secondary"
-            type="reset"
-            disabled={isLoading}
-            onClick={reset}
-          >
+          <Button type="reset" disabled={isLoading} onClick={reset}>
             Reset
           </Button>
           <Button disabled={isLoading}>Create new user</Button>
         </>
-      </FormRowVertical>
+      </FormRow>
     </Form>
   );
 }
