@@ -1,8 +1,13 @@
-# React + Vite
+# React + Supabase + React Query + Typescript
+- to set up locally, create `.env.local` using `.env.local.example` file and add supabase credentials. 
+- `npm run dev`
+- project is hosted in vercel use this `cabin-booking-vite-react.vercel.app/signup` to play around.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Todo 
+- [] photo preview for edit forms
+- [] multi language support
+- [] unit test
+- [] image optimisation 
+- [] clean up snake case and pascal case for supabase variables
 
-Currently, two official plugins are available:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh

@@ -1,0 +1,22 @@
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { toast } from "react-hot-toast";
+import { createEditCabin } from "../../services/api-cabins";
+
+export function useCreateCabin() {
+  const queryClient = useQueryClient();
+
+  const { mutate: createCabin, isLoading: isCreating } = useMutation({
+    mutationFn: createEditCabin,
+    onSuccess: () => {
+      toast.success("New cabin successfully created");
+      queryClient.invalidateQueries({ queryKey: ["cabins"] });
+    },
+    onError: (err: unknown) => {
+      const errorMessage =
+        (err as Error)?.message ?? "An unknown error occurred";
+      toast.error(errorMessage);
+    },
+  });
+
+  return { isCreating, createCabin };
+}
