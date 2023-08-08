@@ -15,6 +15,7 @@ import { Toaster } from "react-hot-toast";
 import Booking from "./pages/booking.tsx";
 import Checkin from "./pages/checkin.tsx";
 import ProtectedRoute from "./ui/protected-route.tsx";
+import Signup from "./pages/signup.tsx";
 import { DarkModeProvider } from "./context/dark-mode-context.tsx";
 
 const queryClient = new QueryClient({
@@ -52,6 +53,7 @@ function App() {
               <Route path="account" element={<Account />} />
             </Route>
             <Route path="login" element={<Login />} />
+            <Route path="signup" element={<Signup />} />
             <Route path="*" element={<PageNotFound />} />
           </Routes>
         </BrowserRouter>

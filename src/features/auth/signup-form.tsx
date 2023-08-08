@@ -1,10 +1,10 @@
 import { useForm } from "react-hook-form";
 import { useSignup } from "./use-signup";
 import Form from "../../ui/form";
-import FormRow from "../../ui/form-row";
 import Input from "../../ui/input";
 import Button from "../../ui/button";
 import { SignUpData } from "../../services/api-auth";
+import FormRowVertical from "../../ui/form-row-vertical";
 
 function SignupForm() {
   const { signup, isLoading } = useSignup();
@@ -22,7 +22,7 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow
+      <FormRowVertical
         label={"Full name"}
         error={errors?.full_name?.message as unknown as string}
       >
@@ -32,8 +32,8 @@ function SignupForm() {
           disabled={isLoading}
           {...register("full_name", { required: "This field is required" })}
         />
-      </FormRow>
-      <FormRow
+      </FormRowVertical>
+      <FormRowVertical
         label="Email address"
         error={errors?.email?.message as unknown as string}
       >
@@ -49,8 +49,8 @@ function SignupForm() {
             },
           })}
         />
-      </FormRow>
-      <FormRow
+      </FormRowVertical>
+      <FormRowVertical
         label="Password (min 8 characters)"
         error={errors?.password?.message as unknown as string}
       >
@@ -66,8 +66,8 @@ function SignupForm() {
             },
           })}
         />
-      </FormRow>
-      <FormRow
+      </FormRowVertical>
+      <FormRowVertical
         label="Repeat password"
         error={errors?.passwordConfirm?.message as unknown as string}
       >
@@ -81,8 +81,8 @@ function SignupForm() {
               value === getValues().password || "Passwords need to match",
           })}
         />
-      </FormRow>
-      <FormRow>
+      </FormRowVertical>
+      <FormRowVertical>
         <>
           <Button
             variation="secondary"
@@ -90,11 +90,11 @@ function SignupForm() {
             disabled={isLoading}
             onClick={reset}
           >
-            Cancel
+            Reset
           </Button>
           <Button disabled={isLoading}>Create new user</Button>
         </>
-      </FormRow>
+      </FormRowVertical>
     </Form>
   );
 }
