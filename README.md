@@ -4,10 +4,10 @@
 - project is hosted in vercel use this `cabin-booking-vite-react.vercel.app/signup` to play around.
 
 ## Todo 
-- [] photo preview for edit forms
-- [] multi language support
-- [] unit test
-- [] image optimisation 
-- [] clean up snake case and pascal case for supabase variables
+- [ ] photo preview for edit forms
+- [ ] multi language support
+- [ ] unit test
+- [ ] image optimisation 
+- [ ] clean up snake case and pascal case for supabase variables
 
 
