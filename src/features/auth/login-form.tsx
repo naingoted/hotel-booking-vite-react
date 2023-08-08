@@ -3,12 +3,15 @@ import Button from "../../ui/button";
 import Form from "../../ui/form";
 import Input from "../../ui/input";
 import FormRowVertical from "../../ui/form-row-vertical";
+import FormRow from "../../ui/form-row";
 import { useLogin } from "./use-login";
 import SpinnerMini from "../../ui/spinner-mini";
+import { useNavigate } from "react-router-dom";
 
 function LoginForm() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const navigate = useNavigate();
   const { login, isLoading } = useLogin();
 
   function handleSubmit(e: FormEvent<HTMLFormElement>) {
@@ -48,11 +51,21 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
-      <FormRowVertical>
-        <Button size="large" disabled={isLoading}>
-          {!isLoading ? "Log in" : <SpinnerMini />}
-        </Button>
-      </FormRowVertical>
+      <FormRow>
+        <>
+          <Button size="large" disabled={isLoading}>
+            {!isLoading ? "Log in" : <SpinnerMini />}
+          </Button>
+          <Button
+            size="large"
+            onClick={() => {
+              navigate(`/signup`);
+            }}
+          >
+            Sign up
+          </Button>
+        </>
+      </FormRow>
     </Form>
   );
 }
