@@ -2,20 +2,20 @@ import { Routes, BrowserRouter, Route, Navigate } from "react-router-dom";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import GlobalStyles from "./styles/global-styles";
-import AppLayout from "./ui/app-layout";
-import Login from "./pages/login";
-import PageNotFound from "./pages/page-not-found";
-import Dashboard from "./pages/dashboard";
-import Bookings from "./pages/bookings";
-import Cabins from "./pages/cabins";
-import NewUsers from "./pages/users";
-import Settings from "./pages/settings";
-import Account from "./pages/account";
+import AppLayout from "./ui/app-layout.tsx";
+import Login from "./pages/login.tsx";
+import PageNotFound from "./pages/page-not-found.tsx";
+import Dashboard from "./pages/dashboard.tsx";
+import Bookings from "./pages/bookings.tsx";
+import Cabins from "./pages/cabins.tsx";
+import NewUsers from "./pages/users.tsx";
+import Settings from "./pages/settings.tsx";
+import Account from "./pages/account.tsx";
 import { Toaster } from "react-hot-toast";
-import Booking from "./pages/booking";
-import Checkin from "./pages/checkin";
-import ProtectedRoute from "./ui/protected-route";
-import { DarkModeProvider } from "./context/dark-mode-context";
+import Booking from "./pages/booking.tsx";
+import Checkin from "./pages/checkin.tsx";
+import ProtectedRoute from "./ui/protected-route.tsx";
+import { DarkModeProvider } from "./context/dark-mode-context.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
