@@ -9,7 +9,20 @@ import FormRow from "../../ui/form-row";
 import { useCreateCabin } from "./use-create-cabin";
 import { useEditCabin } from "./use-edit-cabin";
 
-function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
+interface CreateCabinFormProps {
+  cabinToEdit?: {
+    id: string;
+    name: string;
+    max_capacity: number;
+    regular_price: number;
+    discount: number;
+    description: string;
+    image: string;
+  };
+  onCloseModal?: () => void;
+}
+
+function CreateCabinForm({ cabinToEdit, onCloseModal }: CreateCabinFormProps) {
   const { isCreating, createCabin } = useCreateCabin();
   const { isEditing, editCabin } = useEditCabin();
   const isWorking = isCreating || isEditing;
@@ -28,9 +41,9 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
 
     if (isEditSession)
       editCabin(
-        { newCabinData: { ...data, image }, id: editId },
+        { newCabinData: { ...data, image }, id: +editId },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
             onCloseModal?.();
           },
@@ -40,7 +53,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       createCabin(
         { ...data, image: image },
         {
-          onSuccess: (data) => {
+          onSuccess: () => {
             reset();
             onCloseModal?.();
           },
@@ -48,7 +61,7 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       );
   }
 
-  function onError(errors) {
+  function onError(errors: unknown) {
     console.log("onError", errors);
   }
 
@@ -118,7 +131,6 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
         error={errors?.description?.message}
       >
         <Textarea
-          type="number"
           id="description"
           defaultValue=""
           disabled={isWorking}
@@ -139,17 +151,18 @@ function CreateCabinForm({ cabinToEdit = {}, onCloseModal }) {
       </FormRow>
 
       <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button
-          variation="secondary"
-          type="reset"
-          onClick={() => onCloseModal?.()}
-        >
-          Cancel
-        </Button>
-        <Button disabled={isWorking}>
-          {isEditSession ? "Edit cabin" : "Create new cabin"}
-        </Button>
+        <>
+          <Button
+            variation="secondary"
+            type="reset"
+            onClick={() => onCloseModal?.()}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isWorking}>
+            {isEditSession ? "Edit cabin" : "Create new cabin"}
+          </Button>
+        </>
       </FormRow>
     </Form>
   );

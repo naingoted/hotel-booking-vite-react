@@ -1,14 +1,21 @@
 import { getToday } from "../utils/helpers";
 import supabase from "./supabase";
 import { PAGE_SIZE } from "../utils/constants";
+import { Booking } from "../types";
 
-export async function getBookings({ filter, sortBy, page }) {
+interface GetBookingResult {
+  data: Booking[];
+  count: number;
+}
+
+export async function getBookings({
+  filter,
+  sortBy,
+  page,
+}): Promise<GetBookingResult> {
   let query = supabase
     .from("bookings")
-    .select(
-      "id, created_at, start_date,end_date,num_nights,num_guests,status,total_price, cabins(name), guests(full_name, email)",
-      { count: "exact" }
-    );
+    .select("*, cabins(*), guests(*)", { count: "exact" });
 
   // FILTER
   if (filter) query = query[filter.method || "eq"](filter.field, filter.value);
@@ -31,11 +38,10 @@ export async function getBookings({ filter, sortBy, page }) {
     console.error(error);
     throw new Error("Bookings could not be loaded");
   }
-
   return { data, count };
 }
 
-export async function getBooking(id) {
+export async function getBooking(id: number): Promise<Booking> {
   const { data, error } = await supabase
     .from("bookings")
     .select("*, cabins(*), guests(*)")
@@ -51,10 +57,12 @@ export async function getBooking(id) {
 }
 
 // Returns all BOOKINGS that are were created after the given date. Useful to get bookings created in the last 30 days, for example.
-export async function getBookingsAfterDate(date) {
+export async function getBookingsAfterDate(
+  date: string
+): Promise<Partial<Booking>[] | null> {
   const { data, error } = await supabase
     .from("bookings")
-    .select("created_at, total_price,extras_price")
+    .select("created_at, total_price, extras_price")
     .gte("created_at", date)
     .lte("created_at", getToday({ end: true }));
 
@@ -67,10 +75,11 @@ export async function getBookingsAfterDate(date) {
 }
 
 // Returns all STAYS that are were created after the given date
-export async function getStaysAfterDate(date) {
+export async function getStaysAfterDate(
+  date: string
+): Promise<Booking[] | null> {
   const { data, error } = await supabase
     .from("bookings")
-    // .select('*')
     .select("*, guests(full_name)")
     .gte("start_date", date)
     .lte("start_date", getToday());
@@ -83,8 +92,8 @@ export async function getStaysAfterDate(date) {
   return data;
 }
 
-// Activity means that there is a check in or a check out today
-export async function getStaysTodayActivity() {
+// Activity means that there is a check-in or a check-out today
+export async function getStaysTodayActivity(): Promise<Booking[] | null> {
   const { data, error } = await supabase
     .from("bookings")
     .select("*, guests(full_name, nationality, country_flag)")
@@ -104,7 +113,10 @@ export async function getStaysTodayActivity() {
   return data;
 }
 
-export async function updateBooking(id, obj) {
+export async function updateBooking(
+  id: number,
+  obj: Partial<Booking>
+): Promise<Booking> {
   const { data, error } = await supabase
     .from("bookings")
     .update(obj)
@@ -119,8 +131,7 @@ export async function updateBooking(id, obj) {
   return data;
 }
 
-export async function deleteBooking(id) {
-  // REMEMBER RLS POLICIES
+export async function deleteBooking(id: number): Promise<Booking> {
   const { data, error } = await supabase.from("bookings").delete().eq("id", id);
 
   if (error) {

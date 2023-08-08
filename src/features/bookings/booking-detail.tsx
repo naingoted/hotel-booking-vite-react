@@ -13,7 +13,7 @@ import { HiArrowUpOnSquare } from "react-icons/hi2";
 import Modal from "../../ui/modal";
 import ConfirmDelete from "../../ui/confirm-delete";
 import { useBooking } from "./use-booking";
-import useCheckout from "../check-in-out/use-checkout";
+import { useCheckout } from "../check-in-out/use-checkout";
 import { useDeleteBooking } from "./use-delete-booking";
 import Empty from "../../ui/empty";
 

@@ -1,19 +1,26 @@
+import { AuthUser } from "@supabase/supabase-js";
 import supabase, { supabaseUrl } from "./supabase";
 
-export async function signup({ fullName, email, password }) {
+export interface SignUpData {
+  full_name: string;
+  email: string;
+  password: string;
+}
+
+export async function signup({ full_name, email, password }: SignUpData) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
     options: {
       data: {
-        fullName,
+        full_name,
         avatar: "",
       },
     },
   });
 
   if (error) throw new Error(error.message);
-
+  console.log("signup", data);
   return data;
 }
 
@@ -27,7 +34,12 @@ export async function getCurrentUser() {
   return data?.user;
 }
 
-export async function login({ email, password }) {
+export interface LoginData {
+  email: string;
+  password: string;
+}
+
+export async function login({ email, password }: LoginData) {
   const { data, error } = await supabase.auth.signInWithPassword({
     email,
     password,
@@ -43,10 +55,21 @@ export async function logout() {
   if (error) throw new Error(error.message);
 }
 
-export async function updateCurrentUser({ password, full_name, avatar }) {
-  let updateData;
-  if (password) updateData = { password };
-  if (full_name) updateData = { data: { full_name } };
+interface UpdateUserData {
+  password?: string;
+  full_name?: string;
+  avatar?: File | null;
+}
+
+export async function updateCurrentUser({
+  password,
+  full_name,
+  avatar,
+}: UpdateUserData) {
+  let updateData: any = {};
+  if (password) updateData.password = password;
+  if (full_name) updateData.data = { full_name };
+
   const { data, error } = await supabase.auth.updateUser(updateData);
   if (error) throw new Error(error.message);
   if (!avatar) return data;

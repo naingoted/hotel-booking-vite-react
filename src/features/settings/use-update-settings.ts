@@ -11,7 +11,10 @@ export function useUpdateSettings() {
       toast.success("Setting successfully edited");
       queryClient.invalidateQueries({ queryKey: ["settings"] });
     },
-    onError: (error) => toast.error(error.message),
+    onError: (err) => {
+      console.log("ERROR", err);
+      toast.error("Provided email or password are incorrect");
+    },
   });
 
   return { isUpdating, updateSettings };

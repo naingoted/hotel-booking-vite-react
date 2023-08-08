@@ -4,13 +4,14 @@ import Form from "../../ui/form";
 import FormRow from "../../ui/form-row";
 import Input from "../../ui/input";
 import Button from "../../ui/button";
+import { SignUpData } from "../../services/api-auth";
 
 function SignupForm() {
   const { signup, isLoading } = useSignup();
   const { register, formState, getValues, handleSubmit, reset } = useForm();
   const { errors } = formState;
 
-  function onSubmit({ full_name, email, password }) {
+  function onSubmit({ full_name, email, password }: SignUpData) {
     signup(
       { full_name, email, password },
       {
@@ -21,7 +22,10 @@ function SignupForm() {
 
   return (
     <Form onSubmit={handleSubmit(onSubmit)}>
-      <FormRow label={"Full name"} error={errors?.full_name?.message}>
+      <FormRow
+        label={"Full name"}
+        error={errors?.full_name?.message as unknown as string}
+      >
         <Input
           type="text"
           id="full_name"
@@ -29,7 +33,10 @@ function SignupForm() {
           {...register("full_name", { required: "This field is required" })}
         />
       </FormRow>
-      <FormRow label="Email address" error={errors?.email?.message}>
+      <FormRow
+        label="Email address"
+        error={errors?.email?.message as unknown as string}
+      >
         <Input
           type="email"
           id="email"
@@ -45,7 +52,7 @@ function SignupForm() {
       </FormRow>
       <FormRow
         label="Password (min 8 characters)"
-        error={errors?.password?.message}
+        error={errors?.password?.message as unknown as string}
       >
         <Input
           type="password"
@@ -60,7 +67,10 @@ function SignupForm() {
           })}
         />
       </FormRow>
-      <FormRow label="Repeat password" error={errors?.passwordConfirm?.message}>
+      <FormRow
+        label="Repeat password"
+        error={errors?.passwordConfirm?.message as unknown as string}
+      >
         <Input
           type="password"
           id="passwordConfirm"
@@ -73,16 +83,17 @@ function SignupForm() {
         />
       </FormRow>
       <FormRow>
-        {/* type is an HTML attribute! */}
-        <Button
-          variation="secondary"
-          type="reset"
-          disabled={isLoading}
-          onClick={reset}
-        >
-          Cancel
-        </Button>
-        <Button disabled={isLoading}>Create new user</Button>
+        <>
+          <Button
+            variation="secondary"
+            type="reset"
+            disabled={isLoading}
+            onClick={reset}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isLoading}>Create new user</Button>
+        </>
       </FormRow>
     </Form>
   );

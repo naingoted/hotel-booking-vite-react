@@ -1,6 +1,7 @@
-import styled, { css } from "styled-components";
+import { ReactNode } from "react";
+import styled, { css, CSSProp, DefaultTheme } from "styled-components";
 
-const sizes = {
+const sizes: { [key: string]: CSSProp } = {
   small: css`
     font-size: 1.2rem;
     padding: 0.4rem 0.8rem;
@@ -20,7 +21,7 @@ const sizes = {
   `,
 };
 
-const variations = {
+const variations: { [key: string]: CSSProp } = {
   primary: css`
     color: var(--color-brand-50);
     background-color: var(--color-brand-600);
@@ -48,12 +49,18 @@ const variations = {
   `,
 };
 
-const Button = styled.button`
+interface ButtonProps {
+  icon?: ReactNode;
+  variation?: "primary" | "secondary" | "danger";
+  size?: "small" | "medium" | "large";
+}
+
+const Button = styled.button<ButtonProps>`
   border: none;
   border-radius: var(--border-radius-sm);
   box-shadow: var(--shadow-sm);
-  ${(props) => sizes[props.size]}
-  ${(props) => variations[props.variation]}
+  ${(props) => sizes[props.size || "medium"]}
+  ${(props) => variations[props.variation || "primary"]}
 `;
 
 Button.defaultProps = {

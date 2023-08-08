@@ -15,8 +15,9 @@ import Menus from "../../ui/menus";
 import ConfirmDelete from "../../ui/confirm-delete";
 
 import { formatCurrency, formatDistanceFromNow } from "../../utils/helpers";
-// import { useCheckout } from "../check-in-out/use-checkout";
 import { useDeleteBooking } from "./use-delete-booking";
+import { Booking } from "../../types";
+import { useCheckout } from "../check-in-out/use-checkout";
 
 const Cabin = styled.div`
   font-size: 1.6rem;
@@ -45,22 +46,24 @@ const Amount = styled.div`
   font-weight: 500;
 `;
 
+interface BookingRowProps {
+  booking: Booking;
+}
+
 function BookingRow({
   booking: {
     id: bookingId,
-    created_at,
     start_date,
     end_date,
     num_nights,
-    num_guests,
     total_price,
     status,
     guests: { full_name: guestName, email },
     cabins: { name: cabinName },
   },
-}) {
+}: BookingRowProps) {
   const navigate = useNavigate();
-  // const { checkout, isCheckingOut } = useCheckout();
+  const { checkout, isCheckingOut } = useCheckout();
   const { deleteBooking, isDeleting } = useDeleteBooking();
 
   const statusToTagName = {
@@ -80,7 +83,7 @@ function BookingRow({
         <span>
           {isToday(new Date(start_date))
             ? "Today"
-            : formatDistanceFromNow(start_date)}{" "}
+            : formatDistanceFromNow(start_date as unknown as string)}{" "}
           &rarr; {num_nights} night stay
         </span>
         <span>
@@ -114,8 +117,8 @@ function BookingRow({
             {status === "checked-in" && (
               <Menus.Button
                 icon={<HiArrowUpOnSquare />}
-                // onClick={() => checkout(bookingId)}
-                // disabled={isCheckingOut}
+                onClick={() => checkout(bookingId)}
+                disabled={isCheckingOut}
               >
                 Check out
               </Menus.Button>

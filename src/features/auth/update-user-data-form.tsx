@@ -1,12 +1,10 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 
 import Button from "../../ui/button";
 import FileInput from "../../ui/file-input";
 import Form from "../../ui/form";
 import FormRow from "../../ui/form-row";
 import Input from "../../ui/input";
-import Spinner from "../../ui/spinner";
-
 import { useUser } from "./use-user";
 import { useUpdateUser } from "./use-update-user";
 
@@ -23,7 +21,7 @@ function UpdateUserDataForm() {
   const [fullName, setFullName] = useState(currentFullName);
   const [avatar, setAvatar] = useState(null);
 
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!fullName) return;
     updateUser(
@@ -31,7 +29,6 @@ function UpdateUserDataForm() {
       {
         onSuccess: () => {
           setAvatar(null);
-          e.target.reset();
         },
       }
     );
@@ -68,15 +65,17 @@ function UpdateUserDataForm() {
       </FormRow>
 
       <FormRow>
-        <Button
-          type="reset"
-          variation="secondary"
-          disabled={isUpdating}
-          onClick={handleCancel}
-        >
-          Cancel
-        </Button>
-        <Button disabled={isUpdating}>Update account</Button>
+        <>
+          <Button
+            type="reset"
+            variation="secondary"
+            disabled={isUpdating}
+            onClick={handleCancel}
+          >
+            Cancel
+          </Button>
+          <Button disabled={isUpdating}>Update account</Button>
+        </>
       </FormRow>
     </Form>
   );

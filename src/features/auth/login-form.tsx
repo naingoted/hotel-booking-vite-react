@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { FormEvent, useState } from "react";
 import Button from "../../ui/button";
 import Form from "../../ui/form";
 import Input from "../../ui/input";
@@ -11,7 +11,7 @@ function LoginForm() {
   const [password, setPassword] = useState("");
   const { login, isLoading } = useLogin();
 
-  function handleSubmit(e) {
+  function handleSubmit(e: FormEvent<HTMLFormElement>) {
     e.preventDefault();
     if (!email || !password) return;
     login(

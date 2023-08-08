@@ -14,7 +14,10 @@ export function useDeleteCabin() {
         queryKey: ["cabins"],
       });
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err) => {
+      console.log("ERROR", err);
+      toast.error("Provided email or password are incorrect");
+    },
   });
 
   return { isDeleteing, deleteCabin };

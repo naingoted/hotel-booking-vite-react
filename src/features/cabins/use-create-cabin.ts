@@ -11,7 +11,11 @@ export function useCreateCabin() {
       toast.success("New cabin successfully created");
       queryClient.invalidateQueries({ queryKey: ["cabins"] });
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err: unknown) => {
+      const errorMessage =
+        (err as Error)?.message ?? "An unknown error occurred";
+      toast.error(errorMessage);
+    },
   });
 
   return { isCreating, createCabin };

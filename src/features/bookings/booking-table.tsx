@@ -5,10 +5,20 @@ import Empty from "../../ui/empty";
 
 import { useBookings } from "./use-bookings";
 import Spinner from "../../ui/spinner";
-// import Pagination from "../../ui/Pagination";
+import Pagination from "../../ui/pagination";
+import { useSearchParams, useNavigate } from "react-router-dom";
+import { PAGE_SIZE } from "../../utils/constants";
 
 function BookingTable() {
   const { bookings, isLoading, count } = useBookings();
+  // redirect after current page have no data
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
+  const page = +searchParams.get("page");
+  if (page && page > 1 && count === PAGE_SIZE) {
+    navigate("/bookings");
+    return null; // Redirecting, no need to render further
+  }
 
   if (isLoading) return <Spinner />;
 
@@ -33,7 +43,9 @@ function BookingTable() {
           )}
         />
 
-        <Table.Footer>{/* <Pagination count={count} /> */}</Table.Footer>
+        <Table.Footer>
+          <Pagination count={count} />
+        </Table.Footer>
       </Table>
     </Menus>
   );

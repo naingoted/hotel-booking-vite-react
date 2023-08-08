@@ -10,7 +10,11 @@ const StyledTable = styled.div`
   overflow: hidden;
 `;
 
-const CommonRow = styled.div`
+interface CommonRowProps {
+  columns?: string;
+}
+
+const CommonRow = styled.div<CommonRowProps>`
   display: grid;
   grid-template-columns: ${(props) => props.columns};
   column-gap: 2.4rem;
@@ -60,7 +64,9 @@ const Empty = styled.p`
   margin: 2.4rem;
 `;
 
-const TableContext = createContext();
+const TableContext = createContext({
+  columns: "",
+});
 
 function Table({ children, columns }) {
   return (

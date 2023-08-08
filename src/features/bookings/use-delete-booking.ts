@@ -14,7 +14,11 @@ export function useDeleteBooking() {
         queryKey: ["bookings"],
       });
     },
-    onError: (err) => toast.error(err.message),
+    onError: (err: unknown) => {
+      const errorMessage =
+        (err as Error)?.message ?? "An unknown error occurred";
+      toast.error(errorMessage);
+    },
   });
 
   return { isDeleting, deleteBooking };
