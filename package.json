@@ -10,7 +10,7 @@
     "preview": "vite preview",
     "test": "vitest run",
     "test:ui": "vitest --ui",
-    "test:watch": "vitest"
+    "test:watch": "vitest --watch"
   },
   "dependencies": {
     "@supabase/postgrest-js": "^1.8.0",
