@@ -40,15 +40,14 @@ function LoginForm() {
           disabled={isLoading}
         />
       </FormRowVertical>
-
       <FormRowVertical label="Password">
         <Input
           type="password"
           id="password"
-          // autoComplete="current-password"
+          autoComplete="password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          // disabled={isLoading}
+          disabled={isLoading}
         />
       </FormRowVertical>
       <FormRow>
