@@ -1,8 +1,10 @@
-import { http, HttpResponse, Request } from "msw";
+import { http, HttpResponse } from "msw";
 
-//https://rbwcjzwdjrimcvgbribk.supabase.co/auth/v1/token?grant_type=password
+// actual url https://rbwcjzwdjrimcvgbribk.supabase.co/auth/v1/token?grant_type=password\
+
 export const handlers = [
-  http.post(`${import.meta.env.VITE_SUPABASE_URL}/auth/v1/token`, async () => {
+  http.post("https://test.supabase.co/auth/v1/token", async () => {
+    console.log("MSW handler triggered");
     return HttpResponse.json(
       {
         error: "invalid_grant",

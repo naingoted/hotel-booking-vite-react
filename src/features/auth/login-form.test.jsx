@@ -24,16 +24,16 @@ test("renders LoginForm without crashing", () => {
  * 4. test the form submission with valid data
  */
 
-test("test the form submission wih correct credential", () => {
+test("test the form submission wih correct credential", async () => {
   const user = userEvent.setup();
   renderWithProviders(<LoginForm />);
   const emailInput = screen.getByRole("textbox", { name: /email/i });
   const passwordInput = screen.getByLabelText(/password/i);
   const loginButton = screen.getByRole("button", { name: /log in/i });
 
-  user.type(emailInput, "email@email.com");
-  user.type(passwordInput, "pass");
-  user.click(loginButton); // click login button
+  await user.type(emailInput, "email@email.com");
+  await user.type(passwordInput, "pass");
+  await user.click(loginButton); // click login button
   // expect(loginButton).toBeDisabled();
   // console.log network request
 });

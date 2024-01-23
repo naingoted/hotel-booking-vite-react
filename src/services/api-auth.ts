@@ -40,14 +40,19 @@ export interface LoginData {
 }
 
 export async function login({ email, password }: LoginData) {
-  const { data, error } = await supabase.auth.signInWithPassword({
-    email,
-    password,
-  });
+  console.log("login issue", supabase.auth.signInWithPassword);
+  try {
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email,
+      password,
+    });
 
-  if (error) throw new Error(error.message);
+    if (error) throw new Error(error.message);
 
-  return data;
+    return data;
+  } catch (e) {
+    console.log("login error", e);
+  }
 }
 
 export async function logout() {
